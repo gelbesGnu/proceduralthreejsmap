@@ -1,10 +1,10 @@
 
-
-
+/*
+{
 import React, { Suspense } from 'react';
 import { Canvas, useLoader } from "@react-three/fiber";
 import { OrbitControls } from '@react-three/drei';
-import { Vector2, TextureLoader, cylinderGeometry, DoubleSide } from 'three';
+import { Vector2, TextureLoader } from 'three';
 import SimplexNoise from 'simplex-noise';
 
 
@@ -15,7 +15,8 @@ import grassMap from "./assets/grass.jpg";
 import sandMap from "./assets/sand.jpg";
 import stoneMap from "./assets/stone.png";
 import waterMap from "./assets/water.jpg";
-
+import { CylinderGeometry } from 'three';
+import { DoubleSide } from 'three';
 
 
 
@@ -36,17 +37,13 @@ function Hex(props){
   //console.log(position2)
   const tex = CalculateTex(position2[2])
   //console.log(tex);
-  
+
 
   return(
-    <>
-    <CreateStone 
-      position={position2}
-    />
     <mesh
       position={[position2[0],position2[2]/2,position2[1]]}
     >
-      <cylinderGeometry
+      <CylinderGeometry
         args={[1, 1, position2[2], 6, 1, false]}  />
 
       <meshStandardMaterial
@@ -54,26 +51,24 @@ function Hex(props){
       />
 
     </mesh>
-    </>
   )
 }
-
+/*
 function Water(){
-  
   const [water] = useLoader(TextureLoader, [waterMap]);
 
   return(
     <mesh
       position={[0, MAX_HEIGHT * 0.1, 0]}
     >
-      <cylinderGeometry args={[15.5, 15.5, MAX_HEIGHT * 0.2, 50]} />
+      <CylinderGeometry args={[16, 16, MAX_HEIGHT * 0.2, 50]} />
       <meshPhysicalMaterial
         
-        color={'#55aaff'}
-        ior={1.5}
-        transmission={0.5}
+        color={"#55aaff"}
+        //ior={1.4}
+        transmission={0.9}
         transparent={true}
-        //thickness={1.5}
+        thickness={1.5}
         roughness={1}
         metalness={0.025}
         roughnessMap={water}
@@ -87,51 +82,14 @@ function Water(){
 function MapContainer(){
   const [dirt]  = useLoader(TextureLoader, [dirtMap]); 
   return(
-    <>
-      <mesh position={[0,MAX_HEIGHT * 0.125, 0]}>
-        <cylinderGeometry args={[15.51, 15.51, MAX_HEIGHT* 0.25, 50, 1, true]} />
-        
-        <meshPhysicalMaterial 
-          map={dirt}
-          side={DoubleSide}
-        />
-      </mesh>
-      <mesh position={[0, -MAX_HEIGHT * 0.05, 0]}>
-        <cylinderGeometry args={[17.5, 17.5, MAX_HEIGHT*0.1, 50]} />
-        <meshPhysicalMaterial 
-          map={dirt}
-          side={DoubleSide}
-        />
-      </mesh>
-    </>
-  )
-}
-
-function CreateStone(props) {
-  const [stone] = useLoader(TextureLoader, [stoneMap]); 
-  const px = Math.random() * 0.5;
-  const py = Math.random() * 0.5;
-  const position = {...props.position};
-  const position2 = []
-  if(position[2] > MAX_HEIGHT* 0.85 || Math.random() < 0.05){
-  return(
-    <mesh
-    position={[position[0]+px,position[2],position[1]+px]}
-    
-    >
-      <sphereGeometry
-        args={[Math.random() * 0.3 + 0.1, 7 , 7]}
-        
-      />
-      <meshStandardMaterial
-        map={stone}
+    <mesh position={[0,MAX_HEIGHT * 0.125, 0]}>
+      <CylinderGeometry args={[16.1, 16.1, MAX_HEIGHT* 0.25, 50, 1, true]} />
+      <meshPhysicalMaterial 
+        map={dirt}
+        side={DoubleSide}
       />
     </mesh>
   )
-  }
-  else{
-   return null
-  }
 }
 
 function CalculateTex(height){
@@ -200,7 +158,7 @@ function App() {
       
     >
       <Suspense fallback={null}>
-      <ambientLight intensity={0.03} />
+      <ambientLight intensity={0.05} />
       <pointLight 
         
         args={[0xff724f, 4, 100]}
@@ -208,11 +166,8 @@ function App() {
         
       />
       
-      <MapContainer />
-      <Water />
-
-      
-      
+     
+    
       
       {positions.map((position) =>
           <Hex position={position}/>
@@ -241,3 +196,4 @@ function App() {
 }
 
 export default App;
+*/
